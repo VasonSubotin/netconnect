@@ -1,0 +1,23 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26730.15
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "netconnect", "netconnect.pyproj", "{E963BDE7-BF6A-41BA-8D10-9B17BD8B1F90}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E963BDE7-BF6A-41BA-8D10-9B17BD8B1F90}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E963BDE7-BF6A-41BA-8D10-9B17BD8B1F90}.Release|Any CPU.ActiveCfg = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C9C3BF52-4949-4A07-8676-D3B3CA968502}
+	EndGlobalSection
+EndGlobal
