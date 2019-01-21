@@ -89,12 +89,12 @@ def main():
     #print("\nCurrentsoc: \n", currentsoc)
     
     obj = cplex_model
-    intervals, resources, locations, energytoresource = obj.get_lp_solution(cplex_model,5,4)
+    intervals = obj.get_lp_solution(cplex_model,5,4)
     #sch  = schedule
     #sch.row_node = [45,67,8]
     #sch.make_intervals(schedule, [45,67,8])
     
-    print("\nintervals:\n", intervals, "\nresources:\n",resources, "\nenergytoresource:\n", energytoresource, "\nlocation:\n", locations)
+    print("\nintervals:\n", intervals)
 
     #output = make_output
     #dat = output.dataframe_to_json(make_output, energytoresource)
