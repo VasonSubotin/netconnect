@@ -81,6 +81,8 @@ class get_data:
         
         #read prices
         df_prices= pd.read_excel(xls, 'Prices')
+        df_resources = df_prices.index 
+        df_locations = df_prices.iloc[0:1,0:4]
         prices = np.array(df_prices.iloc[1:6,0:4])
     
         df_current_soc= pd.read_excel(xls, 'CurrentSOC')
@@ -93,10 +95,7 @@ class get_data:
         # read MSocs
         df_msoc= pd.read_excel(xls, 'MSoc')
         msoc = np.array(df_msoc["SOCmax"][1:6])
-        return(prices,current_soc, nodes, msoc)
-
-        
-
+        return(df_resources,df_locations, prices,current_soc, nodes, msoc)
 
 
 
