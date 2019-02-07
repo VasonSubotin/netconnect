@@ -31,14 +31,13 @@ class cplex_model:
         self.NumberOfNodes = NumberOfNodes
 
         
-    def get_lp_solution(self, NumberOfResources, NumberOfNodes):
+    def get_lp_solution(self, resources, locations, prices,current_soc, nodes, msoc):
         constraints = []
-        getdata = get_data
+
+        NumberOfResources, NumberOfNodes = [nodes.shape[0], nodes.shape[1]]
         
-        #read data from the file 
-        resources, locations, prices,current_soc, nodes, msoc = getdata.get_data_from_file(getdata.get_data_from_file('data/DataFile.xlsx'))
-        
-        energytoresource = cvx.Variable((NumberOfResources,NumberOfNodes), nonneg=True)
+              
+        energytoresource = cvx.Variable((NumberOfResources, NumberOfNodes), nonneg=True)
     
         obj = cvx.Minimize(cvx.sum(cvx.multiply(energytoresource, prices)))
         
@@ -79,7 +78,7 @@ class cplex_model:
         
 def main():
     
-    obj = get_data
+   
     
     #nodes = obj.get_nodes_from_resources(get_data,'https://ulefqvgdah.execute-api.us-west-1.amazonaws.com/Prod', [1,2,3,4,5]  )
     #msoc = obj.get_maxsoc_from_resources(get_data,'https://ulefqvgdah.execute-api.us-west-1.amazonaws.com/Prod', [1,2,3,4,5]  )
@@ -89,16 +88,13 @@ def main():
     #print("\nCurrentsoc: \n", currentsoc)
     
     obj = cplex_model
-    intervals = obj.get_lp_solution(cplex_model,5,4)
-    #sch  = schedule
-    #sch.row_node = [45,67,8]
-    #sch.make_intervals(schedule, [45,67,8])
-    
-    print("\nintervals:\n", intervals)
+    getdata = get_data
+        
+    #read data from the file 
+    resources, locations, prices,current_soc, nodes, msoc = getdata.get_data_from_file(getdata.get_data_from_file('data/DataFile.xlsx'))
+        
+    intervals = obj.get_lp_solution(cplex_model, resources, locations, prices,current_soc, nodes, msoc)
 
-    #output = make_output
-    #dat = output.dataframe_to_json(make_output, energytoresource)
-    #print(dat)
     
 
 if __name__=="__main__":
