@@ -9,6 +9,7 @@ from datetime import datetime
 import pandas as pd
 import numpy as np
 import random
+import json
 
 class interval:
     def __init__(self):
@@ -46,35 +47,27 @@ class interval:
 
 
 class schedule:
-    #def __init__(self):
-     #   pass
-        #self.row_node = row_node
-        #self.resource_id = resource_id
-        #self.schedule_id = "aaa"
-        #self.time_start = datetime.now()
-        #self.savings = 22
-        #self.intervals = self.make_intervals(self.row_node)
-           
+          
 
     def __list_random(ran):
         return(random.shuffle(ran))
     
-    def make_intevals(self, energytoresource,  prices, locations, current_soc):
-        #df = pd.DataFrame()
+    def make_schedules(self, energytoresource,  prices, locations, current_soc):
+        node__num = locations.shape[1]
         schlist = []
-        duration = list(np.random.randint(2000,14500,size=(4)))
-        cost_of_charging = list(np.random.randint(10,2000,size=(4)))
-        charge_rate = list(np.random.randint(10,450,size=(4)))
+        duration = list(np.random.randint(2000,14500,size=(node__num)))
+        cost_of_charging = list(np.random.randint(10,2000,size=(node__num)))
+        charge_rate = list(np.random.randint(10,450,size=(node__num)))
         #interval_type = self.__list_random(["CHR", "TOU", "DRV","WRK" ])
         interval_type = 'CHR'
-        economic_savings = list(np.random.randint(1,10,size=(4)))
-        co2_impact = list(np.random.randint(1,10,size=(4))) 
+        economic_savings = list(np.random.randint(1, 10, size=(node__num)))
+        co2_impact = list(np.random.randint(1, 10, size=(node__num))) 
         soc_achieved = energytoresource.value + current_soc
 
         for index, resoure in enumerate(energytoresource.value.tolist()):
             df = pd.DataFrame()
-            df["time_start"] = datetime.now()
             df["energy"] = resoure
+            df["time_start"] = str(datetime.now())
             df["price"] = prices.tolist()[index]
             df["location"] = locations.values.tolist()[0]
             df["duration"] = duration
@@ -84,40 +77,14 @@ class schedule:
             df["economic_savings"] = economic_savings
             df["co2_impact"] = co2_impact
             df["soc_achieved"] = soc_achieved.tolist()[index]
-            df = df.to_json(orient='records')
-            temp_dic = {"schedule_id": "guid","time_start" : "time_start", "savings":3.5, "intervals":df }
-
-            
+            df = df.to_dict(orient = 'records')
+            #df = df.to_json(orient='records')
+            temp_dic = {"schedule_id": "guid","time_start" : str(datetime.now()), "savings":3.5, "intervals":df }
+            temp_dic = json.dumps(temp_dic)
             schlist.append(temp_dic)
+            
         print(schlist) 
         return(schlist)
-        
-    def make_schedule(self, intervals):
-        intervals = intervals.to_json(orient='records')
-       
-        temp_dic = {"schedule_id": "guid","time_start" : "time_start", "savings":3.5, "intervals":intervals }
-        print("scheduale", temp_dic)
-
-    
-        return(temp_dic)
-    
-    def make_intervals(self, row_node):
-        for node in row_node:
-            tempobj = interval
-            tempobj.time_start = datetime.now()
-            tempobj.location = "mocklocation"
-            tempobj.cost_of_charging = 334
-            tempobj.price = 3.4
-            tempobj.duration = 45
-            tempobj.energy = node
-            tempobj.charge_rate = 433
-            tempobj.interval_type = "DAM"
-            tempobj.economic_savings = 22
-            tempobj.co2_impact = 11
-            tempobj.soc_achieved = 34
-            interval_json = tempobj.dataframe_to_json(self)
-            print(interval_json)
-        return(interval_json)
         
 
     

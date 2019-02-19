@@ -73,28 +73,28 @@ class get_data:
         print(df)
         return(df)
         
-    def get_data_from_file(self, filename = 'data/DataFile.xlsx'):
+    def get_data_from_file(self, resources, noden,  filename = 'data/DataFile.xlsx'):
         data_file = filename
-        
+        #noden = 4
         #create xls object
         xls = pd.ExcelFile(data_file)
         
         #read prices
         df_prices= pd.read_excel(xls, 'Prices')
         df_resources = df_prices.index 
-        df_locations = df_prices.iloc[0:1,0:4]
-        prices = np.array(df_prices.iloc[1:6,0:4])
+        df_locations = df_prices.iloc[0:1,0:noden]
+        prices = np.array(df_prices.iloc[1:resources,0:noden])
     
         df_current_soc= pd.read_excel(xls, 'CurrentSOC')
-        current_soc = np.array(df_current_soc.iloc[1:6,0:4])
+        current_soc = np.array(df_current_soc.iloc[1:resources,0:noden])
     
         #read nodes
         df_nodes= pd.read_excel(xls, 'Nodes')
-        nodes = np.array(df_nodes.iloc[1:6,0:4])
+        nodes = np.array(df_nodes.iloc[1:resources,0:noden])
     
         # read MSocs
         df_msoc= pd.read_excel(xls, 'MSoc')
-        msoc = np.array(df_msoc["SOCmax"][1:6])
+        msoc = np.array(df_msoc["SOCmax"][1:resources])
         return(df_resources,df_locations, prices,current_soc, nodes, msoc)
 
 
